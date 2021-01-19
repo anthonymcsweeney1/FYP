@@ -3,8 +3,9 @@
  
  try  
  {  
-     $connect = new PDO("Server = 117380531fyp.database.windows.net; Database = FYP117380531", "fyp117380531", "FYP2021");
-     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);  
+    
+   $connect = new PDO("sqlsrv:server = tcp:117380531fyp.database.windows.net,1433; Database = FYP117380531", "fyp117380531", "FYP2021!");
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       if(isset($_POST["login"]))  
       {  
            if(empty($_POST["username"]) || empty($_POST["password"]))  
