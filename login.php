@@ -1,59 +1,65 @@
 <?php 
-session_start();
-include("db_con.php");
-?>
-<?php
-$msg = ""; 
-if(isset($_POST['submitBtnLogin'])) {
-  $username = trim($_POST['username']);
-  $password = trim($_POST['password']);
-  if($username != "" && $password != "") {
-    try {
-      $query = "select * from `users` where `user_name`=:username and `password`=:password";
-      $stmt = $db->prepare($query);
-      $stmt->bindParam('username', $username, PDO::PARAM_STR);
-      $stmt->bindValue('password', $password, PDO::PARAM_STR);
-      $stmt->execute();
-      $count = $stmt->rowCount();
-      $row   = $stmt->fetch(PDO::FETCH_ASSOC);
-      if($count == 1 && !empty($row)) {
-        /******************** Your code ***********************/
-        $_SESSION['sess_user_id']   = $row['id'];
-        $_SESSION['sess_user_name'] = $row['user_name'];
-        $_SESSION['sess_name'] = $row['password'];
-       
-      } else {
-        $msg = "Invalid username and password!";
-      }
-    } catch (PDOException $e) {
-      echo "Error : ".$e->getMessage();
-    }
-  } else {
-    $msg = "Both fields are required!";
-  }
-}
-?>
+session_start(); 
 
-<form method="post">
-  <table class="loginTable">
-     <tr>
-      <th>ADMIN PANEL LOGIN</th>
-     </tr>
-     <tr>
-      <td>
-        <label class="firstLabel">Username:</label>
-        <input type="text" name="username" id="username" value="" autocomplete="off" />
-      </td>
-     </tr>
-     <tr>
-      <td><label>Password:</label>
-        <input type="password" name="password" id="password" value="" autocomplete="off" /></td>
-     </tr>
-     <tr>
-      <td>
-         <input type="submit" name="submitBtnLogin" id="submitBtnLogin" value="Login" />
-         <span class="loginMsg"><?php echo @$msg;?></span>
-      </td>
-     </tr>
-  </table>
-</form>
+
+include "db_conn.php";
+
+if (isset($_POST['uname']) && isset($_POST['password'])) {
+// validate user input in fields
+	function validate($data){
+       $data = trim($data);
+	   $data = stripslashes($data);
+	   $data = htmlspecialchars($data);
+	   return $data;
+	}
+
+	$uname = validate($_POST['uname']);
+	$pass = validate($_POST['password']);
+
+
+// if field empty
+	if (empty($uname)) {
+		header("Location: index.php?error=Username is required");
+	    exit();
+	}else if(empty($pass)){
+        header("Location: index.php?error=Password is required");
+	    exit();
+	}else{
+		$sql = "SELECT * FROM users WHERE user_name='$uname' AND password='$pass'";
+
+		$result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) === 1) {
+			$row = mysqli_fetch_assoc($result);
+            if ($row['user_name'] === $uname && $row['password'] === $pass) {
+                // get session values
+
+
+// take user to page based on user type
+              switch($row['User_Type']) {
+      case 'OfferOwner':
+        header("location: test.php");
+        break;
+      case 'Processor':
+        header("location: test.php");
+        break;
+    case 'BFM':
+        header("location: test.php");
+        break;
+      default:
+              }
+		        exit();
+            }else{
+				header("Location: index.php?error=Incorect Username or password");
+		        exit();
+			}
+		}else{
+			header("Location: index.php?error=Incorect Username or password");
+	        exit();
+		}
+	}
+
+}else{
+	header("Location: index.php");
+	exit();
+}
