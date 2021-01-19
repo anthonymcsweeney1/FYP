@@ -1,5 +1,5 @@
 <?php  
- session_start();  
+  
  
  try  
  {  
@@ -25,7 +25,7 @@
                 $count = $statement->rowCount();  
                 if($count > 0)  
                 {  
-                     $_SESSION["username"] = $_POST["username"];  
+                     
                      header("location:test.php");  
                 }  
                 else  
