@@ -1,0 +1,69 @@
+<?php 
+session_start(); 
+
+
+include "db_conn.php";
+
+if (isset($_POST['uname']) && isset($_POST['password'])) {
+// validate user input in fields
+	function validate($data){
+       $data = trim($data);
+	   $data = stripslashes($data);
+	   $data = htmlspecialchars($data);
+	   return $data;
+	}
+
+	$uname = validate($_POST['uname']);
+	$pass = validate($_POST['password']);
+        
+
+// if field empty
+	if (empty($uname)) {
+		header("Location: index.php?error=Username is required");
+	    exit();
+	}else if(empty($pass)){
+        header("Location: index.php?error=Password is required");
+	    exit();
+	}else{
+		$sql = "SELECT * FROM users WHERE user_name='$uname' AND password='$pass'";
+
+		$result = mysqli_query($conn, $sql);
+
+		if (mysqli_num_rows($result) === 1) {
+			$row = mysqli_fetch_assoc($result);
+            if ($row['user_name'] === $uname && $row['password'] === $pass) {
+                // get session values
+            	$_SESSION['user_name'] = $row['user_name'];
+            	$_SESSION['name'] = $row['name'];
+            	$_SESSION['id'] = $row['id'];
+                $_SESSION['approval_level'] = $row['approval_level'];
+                    $_SESSION['approval_criteria'] = $row['approval_criteria'];
+              
+// take user to page based on user type
+              switch($row['User_Type']) {
+      case 'OfferOwner':
+        header("location: Ap_Home.php");
+        break;
+      case 'Processor':
+        header("location: Pr_Home.php");
+        break;
+    case 'BFM':
+        header("location: BFM_Home.php");
+        break;
+      default:
+              }
+		        exit();
+            }else{
+				header("Location: index.php?error=Incorect Username or password");
+		        exit();
+			}
+		}else{
+			header("Location: index.php?error=Incorect Username or password");
+	        exit();
+		}
+	}
+	
+}else{
+	header("Location: index.php");
+	exit();
+}
