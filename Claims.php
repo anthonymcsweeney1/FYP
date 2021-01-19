@@ -1,32 +1,6 @@
 
 
-<?php
-$connection = mysqli_connect("localhost","root","");
-$db = mysqli_select_db($connection,'test_db');
-            
-if(isset($_POST['button1'])){
-    
-     // Check claim number is in the database
-    $claimnumber = $_POST['claimnumber'];
-    
-    $sql = "SELECT * FROM claims WHERE ClaimNum='$claimnumber'";
-    $result = mysqli_query($connection, $sql);
-    
-    if (mysqli_num_rows($result) === 1) {
-	$row = mysqli_fetch_assoc($result);
-     if ($row['ClaimNum'] === $claimnumber) {
-     $link='ClaimPage.php?ClaimNum='.$_POST['claimnumber'];
-    header('location:'.$link);
-    }else{
-		header("Location: noresults.php");
-		        exit();
-			}
-		}else{
-			header("Location: noresults.php");
-	        exit();
-		}
-   
-    }
+
     
  
 
