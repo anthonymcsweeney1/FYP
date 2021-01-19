@@ -21,7 +21,7 @@ class TableRows extends RecursiveIteratorIterator {
   }
 }
 
-$servername = "tcp:117380531fyp.database.windows.net";
+$servername = "117380531fyp.database.windows.net";
 $username = "fyp117380531";
 $password = "FYP2021!";
 $dbname = "FYP117380531";
