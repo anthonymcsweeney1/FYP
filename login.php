@@ -1,65 +1,23 @@
-<?php 
-session_start(); 
-
-
-include "db_conn.php";
-
-if (isset($_POST['uname']) && isset($_POST['password'])) {
-// validate user input in fields
-	function validate($data){
-       $data = trim($data);
-	   $data = stripslashes($data);
-	   $data = htmlspecialchars($data);
-	   return $data;
-	}
-
-	$uname = validate($_POST['uname']);
-	$pass = validate($_POST['password']);
-        
-
-// if field empty
-	if (empty($uname)) {
-		header("Location: index.php?error=Username is required");
-	    exit();
-	}else if(empty($pass)){
-        header("Location: index.php?error=Password is required");
-	    exit();
-	}else{
-		$sql = "SELECT * FROM users WHERE user_name='$uname' AND password='$pass'";
-
-		$result = mysqli_query($conn, $sql);
-
-		if (mysqli_num_rows($result) === 1) {
-			$row = mysqli_fetch_assoc($result);
-            if ($row['user_name'] === $uname && $row['password'] === $pass) {
-                // get session values
-            	
-              
-// take user to page based on user type
-              switch($row['User_Type']) {
-      case 'OfferOwner':
-        header("location: test.php");
-        break;
-      case 'Processor':
-        header("location: test.php");
-        break;
-    case 'BFM':
-        header("location: test.php");
-        break;
-      default:
-              }
-		        exit();
-            }else{
-				header("Location: index.php?error=Incorect Username or password");
-		        exit();
-			}
-		}else{
-			header("Location: index.php?error=Incorect Username or password");
-	        exit();
-		}
-	}
-	
-}else{
-	header("Location: index.php");
-	exit();
-}
+<form method="post">
+  <table class="loginTable">
+     <tr>
+      <th>ADMIN PANEL LOGIN</th>
+     </tr>
+     <tr>
+      <td>
+        <label class="firstLabel">Username:</label>
+        <input type="text" name="username" id="username" value="" autocomplete="off" />
+      </td>
+     </tr>
+     <tr>
+      <td><label>Password:</label>
+        <input type="password" name="password" id="password" value="" autocomplete="off" /></td>
+     </tr>
+     <tr>
+      <td>
+         <input type="submit" name="submitBtnLogin" id="submitBtnLogin" value="Login" />
+         <span class="loginMsg"><?php echo @$msg;?></span>
+      </td>
+     </tr>
+  </table>
+</form>
