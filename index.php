@@ -14,7 +14,7 @@
            }  
            else  
            {  
-                $query = "SELECT * FROM users WHERE username = :username AND password = :password";  
+                $query = "SELECT * FROM users WHERE username = 'davidfoley1@techguys.com' AND password = 'pass'";  
                 $statement = $connect->prepare($query);  
                 $statement->execute(  
                      array(  
