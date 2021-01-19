@@ -1,11 +1,4 @@
 
-
-
-    
- 
-
-?>
-
 <?php
 include 'functions.php';
 // Connect to MySQL database
