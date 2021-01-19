@@ -42,13 +42,13 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 // take user to page based on user type
               switch($row['User_Type']) {
       case 'OfferOwner':
-        header("location: Ap_Home.php");
+        header("location: test.php");
         break;
       case 'Processor':
-        header("location: Pr_Home.php");
+        header("location: test.php");
         break;
     case 'BFM':
-        header("location: BFM_Home.php");
+        header("location: test.php");
         break;
       default:
               }
