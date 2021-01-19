@@ -1,61 +1,109 @@
-<?php 
+<!DOCTYPE html>
 
 
+<html class="no-js" lang="en">
 
-include "db_conn.php";
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="assets/images/icon/favicon.ico">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/themify-icons.css">
+    <link rel="stylesheet" href="assets/css/metisMenu.css">
+    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css/slicknav.min.css">
+    <!-- amchart css -->
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- others css -->
+    <link rel="stylesheet" href="assets/css/typography.css">
+    <link rel="stylesheet" href="assets/css/default-css.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- modernizr css -->
+    <script src="assets/js/vendor/modernizr-2.8.3.min.js"></script>
+</head>
 
-if (isset($_POST['uname']) && isset($_POST['password'])) {
-// validate user input in fields
-	function validate($data){
-       $data = trim($data);
-	   $data = stripslashes($data);
-	   $data = htmlspecialchars($data);
-	   return $data;
-	}
+<style>
+h5 {text-align: center;}
 
-	$uname = validate($_POST['uname']);
-	$pass = validate($_POST['password']);
-        
+</style>
 
-// if field empty
-	if (empty($uname)) {
-		header("Location: index.php?error=Username is required");
-	    exit();
-	}else if(empty($pass)){
-        header("Location: index.php?error=Password is required");
-	    exit();
-	}else{
-		$sql = "SELECT * FROM users WHERE user_name='$uname' AND password='$pass'";
+<body>
+    <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <!-- preloader area start -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- preloader area end -->
+    <!-- login area start -->
+    <div class="login-area">
+        <div class="container">
+            <div class="login-box ptb--100">
+                <form action="login.php" method="post">
+                    <div class="login-form-head">
+                        <h4>Login</h4>
+                        
+                    </div>
+                    &nbsp;&nbsp;
+                    
+                     <?php if (isset($_GET['error'])) { ?>
+     		<h5 class="error"><?php echo $_GET['error']; ?></h5>
+     	<?php } ?>
+                    <div class="login-form-body">
+                        <div class="form-gp">
+                            <label for="Email">Email</label>
+                            
+                            <input type="email" name="uname" id="exampleInputEmail1">
+                            <i class="ti-email"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="form-gp">
+                            <label for="Password">Password</label>
+                            
+                            <input type="password" name="password" id="exampleInputPassword1">
+                            <i class="ti-lock"></i>
+                            <div class="text-danger"></div>
+                        </div>
+                        <div class="row mb-4 rmber-area">
+                            <div class="col-6">
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                    <label class="custom-control-label" for="customControlAutosizing">Remember Me</label>
+                                </div>
+                            </div>
+                            <div class="col-6 text-right">
+                                <a href="#">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <div class="submit-btn-area">
+                            <button id="form_submit" type="submit">Submit <i class="ti-arrow-right"></i></button>
+                            
+                     
+                    </div>
+               </form>
+            </div>
+        </div>
+    </div>
+    <!-- login area end -->
 
-		$result = mysqli_query($conn, $sql);
+    <!-- jquery latest version -->
+    <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
+    <!-- bootstrap 4 js -->
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/owl.carousel.min.js"></script>
+    <script src="assets/js/metisMenu.min.js"></script>
+    <script src="assets/js/jquery.slimscroll.min.js"></script>
+    <script src="assets/js/jquery.slicknav.min.js"></script>
+    
+    <!-- others plugins -->
+    <script src="assets/js/plugins.js"></script>
+    <script src="assets/js/scripts.js"></script>
+</body>
 
-		if (mysqli_num_rows($result) === 1) {
-			$row = mysqli_fetch_assoc($result);
-            if ($row['user_name'] === $uname && $row['password'] === $pass) {
-              
-              
-// take user to page based on user type
-              switch($row['User_Type']) {
-      case 'Approver':
-        header("location: Approver.php");
-        break;
-      case 'User':
-        header("location: Home.php");
-        break;
-      default:
-              }
-		        exit();
-            }else{
-				header("Location: index.php?error=Incorect Username or password");
-		        exit();
-			}
-		}else{
-			header("Location: index.php?error=Incorect Username or password");
-	        exit();
-		}
-	}
-	
-}else{
-	header("Location: index.php");
-	exit();
-}
+</html>
