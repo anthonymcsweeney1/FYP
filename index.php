@@ -14,19 +14,19 @@
            }  
            else  
            {  
-                $query = "SELECT * FROM users WHERE user_name = :username AND password = :password";  
+                $query = "SELECT * FROM users WHERE username = :username AND password = :password";  
                 $statement = $connect->prepare($query);  
                 $statement->execute(  
                      array(  
-                          'user_name'     =>     $_POST["username"],  
+                          'username'     =>     $_POST["username"],  
                           'password'     =>     $_POST["password"]  
                      )  
                 );  
                 $count = $statement->rowCount();  
                 if($count > 0)  
                 {  
-                     $_SESSION["user_name"] = $_POST["username"];  
-                     header("location:login_success.php");  
+                     $_SESSION["username"] = $_POST["username"];  
+                     header("location:test.php");  
                 }  
                 else  
                 {  
