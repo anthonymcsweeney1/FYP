@@ -33,11 +33,7 @@ if (isset($_POST['uname']) && isset($_POST['password'])) {
 			$row = mysqli_fetch_assoc($result);
             if ($row['user_name'] === $uname && $row['password'] === $pass) {
                 // get session values
-            	$_SESSION['user_name'] = $row['user_name'];
-            	$_SESSION['name'] = $row['name'];
-            	$_SESSION['id'] = $row['id'];
-                $_SESSION['approval_level'] = $row['approval_level'];
-                    $_SESSION['approval_criteria'] = $row['approval_criteria'];
+            	
               
 // take user to page based on user type
               switch($row['User_Type']) {
