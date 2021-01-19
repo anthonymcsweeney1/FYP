@@ -8,6 +8,7 @@ function pdo_connect_mysql() {
     $DATABASE_NAME = 'FYP117380531';
     try {
     	return new PDO('mysql:host=' . $DATABASE_HOST . ';dbname=' . $DATABASE_NAME . ';charset=utf8', $DATABASE_USER, $DATABASE_PASS);
+	    echo "Connection Success!";
     } catch (PDOException $exception) {
     	// If there is an error with the connection, stop the script and display the error.
     	exit('Failed to connect to database!');
